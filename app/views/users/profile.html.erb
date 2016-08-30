@@ -1,0 +1,132 @@
+<div class="col-md-8">
+  <div class="header">
+      <h4 class="title">Info</h4>
+  </div>
+  <div class="content">
+      <form>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                  <label>Username</label>
+                  <input type="text" class="form-control" placeholder="Username" readonly="readonly" value="<%= current_user.username %>">
+              </div>
+            </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" placeholder="Email" readonly="readonly" value="suyash988@mail.com">
+                </div>
+              </div>
+          </div>
+
+          <div class="row">
+              <div class="col-md-4">
+                  <div class="form-group">
+                      <label>Followers</label>
+                      <input type="text" class="form-control" placeholder="Company" readonly="readonly" value="1">
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="form-group">
+                      <label>Following</label>
+                      <input type="text" class="form-control" placeholder="Last Name" readonly="readonly" value="1">
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="form-group">
+                      <label>Repos</label>
+                      <input type="text" class="form-control" placeholder="Last Name" readonly="readonly" value="16">
+                  </div>
+              </div>
+          </div>
+
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="form-group">
+                      <!-- <label>Repo List</label> -->
+                      <div id="repo-list"></div>
+                  </div>
+              </div>
+          </div>
+
+          
+          <div class="clearfix"></div>
+      </form>
+  </div>
+</div>
+<div class="col-md-4">
+  <div class="card card-user">
+      <div class="image">
+          <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="..."/>
+      </div>
+      <div class="content">
+          <div class="author">
+               <a href="#">
+              <img class="avatar border-gray" src="<%= current_user.pic %>" alt="..."/>
+                <h4 class="title"><%= current_user.name %><br />
+                  
+                </h4>
+              </a>
+          </div>
+          <p class="description text-center">  <br>
+             <br>
+            
+          </p>
+      </div>
+      <hr>
+      <div class="text-center">
+          <button href="#" class="btn btn-simple"><i class="fa fa-facebook-square"></i></button>
+          <button href="#" class="btn btn-simple"><i class="fa fa-twitter"></i></button>
+          <button href="#" class="btn btn-simple"><i class="fa fa-google-plus-square"></i></button>
+
+      </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function(){
+      
+      var username = "<%= current_user.username %>";
+      var requri   = 'https://api.github.com/users/'+username;
+      var repouri  = 'https://api.github.com/users/'+username+'/repos';
+      
+      requestJSON(requri, function(json) {
+        if(json.message == "Not Found" || username == '') {
+          $('#ghapidata').html("<h2>No User Info Found</h2>");
+        }
+        else {
+          var followersnum = json.followers;
+          var followingnum = json.following;
+          var reposnum     = json.public_repos;
+        
+          
+          var outhtml = '<div class="repolist clearfix">';
+          
+          var repositories;
+          $.getJSON(repouri, function(json){
+            repositories = json;   
+            outputPageContent();                
+          });          
+          
+          function outputPageContent() {
+              outhtml = outhtml + '<p><strong>Public Repositories:</strong></p> <ul>';
+              $.each(repositories, function(index) {
+                outhtml = outhtml + '<li><a href="'+repositories[index].html_url+'" target="_blank">'+repositories[index].name + '</a></li>';
+              });
+              outhtml = outhtml + '</ul></div>'; 
+            
+            $('#repo-list').html(outhtml);
+          } 
+        } 
+      }); 
+
+    function requestJSON(url, callback) {
+      $.ajax({
+        url: url,
+        complete: function(xhr) {
+          callback.call(null, xhr.responseJSON);
+        }
+      });
+    }
+  });
+</script>

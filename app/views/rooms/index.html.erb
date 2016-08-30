@@ -1,0 +1,40 @@
+<div class="shifty">
+
+  <div class="col-md-8">
+    <div class="row pads">
+      <% @rooms.each do |room| %>
+      <div class="col-md-6">
+        <div class="better-card">
+          <div style="padding:0.5rem; background-color: #d3d3d3;">
+            <span style="margin-right: 0.3rem"
+            class="glyphicon glyphicon-user"></span>
+            <span></span>
+            <p><%= room.name %></p>
+            <div style="padding: 0.5rem 0; -webkit-column-rule: #847772;
+            -moz-column-rule: #847772;
+            -o-column-rule: #847772;
+            column-rule: #847772;"
+            class="room-new">Created at:  <%= room.created_at %></div>
+          </div>
+          <div class="card-footer">
+            <a href="/chat/<%= room.id %>" data-no-turbolink="true">Enter Room</a>
+          </div>
+        </div>
+      </div>
+      <% end %>  
+    </div>
+  </div>
+  <div class="col-md-4 better-card">
+    <fieldset id=”newRoom”>
+      <p>Start new room</p>
+      <%= form_for(@new_room) do |f| %>
+      Name: <%= f.text_field :name %><br/><br/>
+      Public? <%= f.check_box :public %><br/><br/>
+      <div>
+        <%= f.submit %>
+      </div>
+      <% end %>
+    </fieldset>
+  </div>
+</div>
+

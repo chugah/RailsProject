@@ -1,0 +1,82 @@
+<style>
+  .main-panel > .content {
+    min-height: calc(100% - 123px);
+  }
+</style>
+
+<div class="col-md-12">
+  <div class="col-md-8">
+    <div id="subscriber"></div>
+  </div>
+
+  <div id="videobox">
+  </div>
+
+  <div class="col-md-4">
+    <div id="invitation" >
+    
+    </div>
+  </div>
+</div>
+
+<script src="https://static.opentok.com/v2/js/opentok.js" charset="utf-8"></script>
+<script>
+  
+  var session;
+  var connectionCount = 0;
+
+  function connect() {
+    
+    session = OT.initSession(45592042, '<%= @room.sessionId %>');
+    session.on({
+      streamCreated: function(event) {
+        var options = {
+          width: '100%', 
+          height: 520, 
+          insertMode: 'append'
+        };
+        var subscriber = session.subscribe(event.stream, 'subscriber', options);
+      },
+      connectionCreated: function (event) {
+        connectionCount++;
+        console.log(connectionCount + ' connections.');
+      },
+      connectionDestroyed: function (event) {
+        connectionCount--;
+        console.log(connectionCount + ' connections.');
+      },
+      sessionDisconnected: function sessionDisconnectHandler(event) {
+        // The event is defined by the SessionDisconnectEvent class
+        console.log('Disconnected from the session.');
+       
+        if (event.reason == 'networkDisconnected') {
+          alert('Your network connection terminated.')
+        }
+      }
+    });
+    // Replace token with your own value:
+    session.connect('<%= @tok_token %>', function(error) {
+      if (error) {
+        console.log('Unable to connect: ', error.message);
+      } else {
+      
+        console.log('Connected to the session.');
+        connectionCount = 1;
+        var publisherOptions = {
+          insertMode: 'append',
+          width: '100%',
+          height: 300
+        };
+
+        var publisher = OT.initPublisher('invitation', publisherOptions);
+        session.publish(publisher);
+      }
+    });
+  }
+
+  function disconnect() {
+    session.disconnect();
+  }
+
+  connect();
+</script>

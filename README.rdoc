@@ -1,0 +1,21 @@
+Angelytics - Learn Discover Connect
+
+- A platform for young developers to Learn about the startup trend
+- platform to Discover what projects fellow coder/codette are working on
+- & platform to Connect with these fellow coder/codette to pair program or work.
+
+Key points
+
+  Tapped into the data of AngelList to find out the most funded startups on their website. 
+
+  Made extensive use of d3.js to make this data visually appealing.
+
+  Created a user profile which authenticated login through github and pulled all public info from users github profile to display on profile page.
+
+  Created a video chat room for users using the tokbox api.
+
+  Made use of the google map api along with meetup api to show all upcoming tech events around the users city.
+
+Stack
+
+  Ruby on Rails, Jquery, JS, d3.js, Bootstrap, sqlite3

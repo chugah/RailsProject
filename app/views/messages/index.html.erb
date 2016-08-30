@@ -1,0 +1,82 @@
+<style>
+ /* .btn-custom {
+    background-color: #fff;
+    color: #0a8fd5;
+    font-family: 'Muli', sans-serif; 
+    font-weight: 300;
+    border-radius: 8px;
+    padding: 10px 20px;
+    &:hover {
+      color: #383838;
+      transition: 0.5s;
+      background-color: #fff;
+      text-decoration: none;
+    }
+  }
+
+  .btn:hover {
+    transition: 0.5s;
+    color: #383838;
+    background-color: #fff;
+  }
+
+.message {
+  box-sizing: border-box;
+  background-color: #555555;
+  margin-bottom: 25px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-top: 20px;
+  padding: 1.4em 1.4em;
+  height: 150px;
+  border-bottom: 4px solid #0a8fd5;
+}
+
+.message-title {
+  font-size: 1.5em;
+  font-family: 'Muli', sans-serif;
+  font-weight: 500;
+  margin-top: 0;
+  color: white;
+  margin-bottom: 25px;
+}
+
+.btn-custom {
+  margin-top: 20px;
+}
+
+
+
+.message:nth-child(4n) {
+  clear: left;
+}
+
+.inline-center {
+  text-align: center;
+}
+
+.btn-lg.round {
+  border-radius: 50%\\;
+}
+*/
+.main-panel > .content {
+  min-height: calc(100% - 123px);
+}
+</style>
+
+
+<div class="col-md-12">
+    <%= link_to "New Message", new_message_path, class: "btn btn-primary btn-lg btn-block"%> 
+</div>
+
+<% @messages.each do |message| %>
+<div class="col-md-4">
+  <div class="message">
+    <h2 class="message-title"><%= message.title %></h2>
+    <%= link_to "View Message", message_path(message), class: "btn btn-custom" %>
+  </div>
+</div>    
+<% end %>
+
+  
+
