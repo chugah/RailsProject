@@ -19,3 +19,7 @@ Key points
 Stack
 
   Ruby on Rails, Jquery, JS, d3.js, Bootstrap, sqlite3
+
+URL
+  Click <a href="http://www.angelytics.net">here</a> for demo.
+  Note: You must have a github account to access site features.
